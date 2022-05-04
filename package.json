@@ -5,7 +5,7 @@
   "author": "dlj <1648317228@qq.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "serve": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
@@ -17,6 +17,7 @@
     "echarts": "^4.9.0",
     "element-ui": "^2.15.6",
     "vue": "^2.5.2",
+    "vue-json-viewer": "^2.2.22",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

@@ -1,6 +1,5 @@
 <template>
   <div id="huarongdao">
-    <NavList/>
     <span class="head-title">数字华容道</span>
     <div class="cell-body">
       <div v-for="item in cellObjList" :key="item.id" class="cell-box" @click="changeCellNum">{{item.name}}</div>

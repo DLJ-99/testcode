@@ -1,6 +1,5 @@
 <template>
   <div id="home">
-    <NavList/>
     <span class="head-title">首页</span>
   </div>
 </template>

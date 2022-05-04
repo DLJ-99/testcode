@@ -7,6 +7,7 @@ import components from './components/index'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import echarts from 'echarts'
+import JsonViewer from 'vue-json-viewer'
 
 Vue.config.productionTip = false
 Object.keys(components).forEach((key) => {
@@ -15,6 +16,7 @@ Object.keys(components).forEach((key) => {
 })
 Vue.prototype.$echarts = echarts
 Vue.use(ElementUI)
+Vue.use(JsonViewer)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

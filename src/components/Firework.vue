@@ -26,15 +26,28 @@ export default {
   },
   mounted () {
     // this.setTimer()
-    this.initCharts()
+    // this.initCharts()
+    this.setTimer2()
   },
   methods: {
     setTimer () {
-      // this.initCharts()
       if (this.fireworkTimer === '') {
         this.fireworkTimer = setInterval(this.initCharts(), 1)
       } else {
         this.clearTimer()
+      }
+    },
+    setTimer2 () {
+      let that = this
+      let offsetX = document.getElementById('fireworks').offsetWidth
+      let offsetY = document.getElementById('fireworks').offsetHeight
+      // this.fireworkTimer = setInterval(this.initCharts2(200 * Math.random(), 160 * Math.random(), 20 * Math.random(), 20 * Math.random()), 10000)
+      document.getElementById('fireworks').onclick = function (e) {
+        console.log('e==', e)
+        console.log('e.offsetX==', e.offsetX)
+        console.log('e.offsetY==', e.offsetY)
+        // that.initCharts2(200 * Math.random(), 160 * Math.random(), 8, 8)
+        that.initCharts2(200 * e.offsetX / offsetX, 160 * (offsetY - e.offsetY) / offsetY, 8, 8)
       }
     },
     clearTimer () {
@@ -117,19 +130,26 @@ export default {
       }, {
         coordinateSystem: 'cartesian2d',
         type: 'lines',
+        // zlevel 越大，图层就越靠上
         zlevel: -2,
         effect: {
           show: true,
+          // 间隔时间 s
           period: 1,
+          // 轨迹长度
           trailLength: 0.01,
+          // 轨迹大小
           symbolSize: 4,
+          // 轨迹形状：line、arrow、dot、pin
           symbol: 'circle',
+          // 是否循环
           loop: true
         },
         lineStyle: {
           normal: {
-            color: '#ccc',
+            color: '#fff',
             opacity: 0,
+            // 边的曲度，支持从 0 到 1 的值，值越大曲度越大
             curveness: 0
           }
         },
@@ -143,7 +163,7 @@ export default {
           show: true,
           period: 1,
           trailLength: 0.01,
-          symbolSize: 5,
+          symbolSize: 6,
           symbol: 'pin',
           loop: true
         },
@@ -152,7 +172,7 @@ export default {
             color: '#ccc',
             opacity: 0.02,
             width: 0.01,
-            curveness: 0.1
+            curveness: 0
           }
         },
         data: all
@@ -165,14 +185,58 @@ export default {
       }
       return arr
     },
+    // x, y, aa, bb  x:烟花的x坐标，y：烟花的y坐标，aa：烟花绽放时的x坐标偏移位置，bb：烟花绽放时的y坐标偏移位置
+    initCharts2 (x, y, aa, bb) {
+      // 初始化echarts实例
+      const fireworksChart2 = this.$echarts.init(document.getElementById('fireworks'))
+      this.fireWork(x, y, aa, bb)
+      console.log('Math.random()', Math.random())
+      const option = {
+        xAxis: {
+          data: [],
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          }
+        },
+        yAxis: {
+          silent: true,
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          }
+        },
+        series: this.series
+      }
+
+      fireworksChart2.setOption(option)
+    },
     initCharts () {
       /** ************* 烟花秀 **************/
       // 初始化echarts实例
       const fireworksChart = this.$echarts.init(document.getElementById('fireworks'))
       // let aa = 20;
       // let bb = 60; // 大烟花
-      let aa = 10
-      let bb = 15 // 心形小烟花
+      // let aa = 10
+      // let bb = 15 // 心形小烟花
+      let aa = 8
+      let bb = 8
       // 随机位置
       // this.fireWork(Math.random() * 200, Math.random() * 160, aa, bb)
       // this.fireWork(Math.random() * 200, Math.random() * 160, aa, bb)
@@ -257,6 +321,7 @@ export default {
 <style>
 #firework-body{
   background:url("../assets/img/starSky.jpg") no-repeat center;
+  background-size: cover;
   margin-top: 1.5rem;
 }
 #fireworks{
