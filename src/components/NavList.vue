@@ -1,7 +1,7 @@
 <template>
   <div id="nav-list">
     <ul class="routers">
-      <li v-for="(item,index) in navArr" :key="index" :class="{navCurrent:currentNavName==item.name}"><router-link :to="{name:item.name}">{{item.name}}</router-link></li>
+      <li v-for="(item,index) in navArr" :key="index"><router-link :to="{name:item.name}">{{item.name}}</router-link></li>
     </ul>
   </div>
 </template>
@@ -12,16 +12,14 @@ export default {
   name: 'NavList',
   data () {
     return {
-      navArr: nav.options.routes,
-      currentNavName: nav.history.current.name
+      navArr: nav.options.routes
     }
-  },
-  mounted () {
-    console.log('currentNav', nav)
   }
 }
 </script>
 
 <style>
-
+.router-link-exact-active.router-link-active{
+  color: blueviolet;
+}
 </style>
