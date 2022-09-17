@@ -20,15 +20,12 @@ export default {
           tooltip: {
             show: true,
             trigger: 'item',
-            formatter:
-              '{a} - {b}'
+            formatter: '{a}的{b}:{c},占{d}%'
           },
           toolbox: {
             show: true,
+            right: 50,
             feature: {
-              saveAsImg: {
-                show: true
-              },
               dataView: {
                 show: true,
                 readOnly: false
@@ -54,12 +51,13 @@ export default {
           calculable: true,
           series: [{
             name: 'test',
+            // type: 'funnel',
             type: 'pie',
             itemStyle: {
               normal: {
                 label: {
                   show: true,
-                  formatter: '{a}的{b}:{c},{d}'
+                  formatter: '{a}的{b}:{c},占{d}%'
                 },
                 labelLine: {
                   show: true

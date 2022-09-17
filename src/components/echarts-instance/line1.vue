@@ -36,6 +36,12 @@ export default {
           toolbox: {
             orient: 'vetical',
             feature: {
+              restore: {
+                show: true
+              },
+              dataZoom: {
+                show: true
+              },
               saveAsImage: {show: true},
               dataView: {
                 show: true,

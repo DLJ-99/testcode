@@ -16,7 +16,7 @@
     </keep-alive>
   </div>
 </template>
-
+<script src="/static/echarts/echarts-all.js"></script>
 <script>
 export default {
   name: 'App',
