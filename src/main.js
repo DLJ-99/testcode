@@ -16,11 +16,14 @@ Object.keys(components).forEach((key) => {
   var name = key.replace(/(\w)/, (v) => v.toUpperCase()) // 首字母大写
   Vue.component(`${name}`, components[key])
 })
+var JSEncrypt = require('jsencrypt')
+
 Vue.prototype.$echarts = echarts
 Vue.use(ElementUI)
 Vue.use(JsonViewer)
 Vue.use(Vue2OrgTree)
 Vue.use(dataV)
+Vue.prototype.$jsEncrypt = JSEncrypt
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

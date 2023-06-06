@@ -9,6 +9,8 @@ import snow from '@/components/snow'
 import tree from '@/components/tree'
 import screen from '@/components/screen'
 import LegendSelf from '@/components/LegendSelf'
+import Swiper from '@/components/Swiper'
+import Time from '@/components/Time'
 
 import JsonViewer from '@/components/JsonViewer'
 import '../style/common.css'
@@ -63,6 +65,16 @@ export default new Router({
       path: '/LegendSelf',
       name: 'LegendSelf',
       component: LegendSelf
-    }
+    },
+    {
+      path: '/Swiper',
+      name: 'Swiper',
+      component: Swiper
+    },
+    {
+      path: '/Time',
+      name: 'Time',
+      component: Time
+    },
   ]
 })
