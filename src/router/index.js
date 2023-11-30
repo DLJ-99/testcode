@@ -71,10 +71,10 @@ export default new Router({
       name: 'Swiper',
       component: Swiper
     },
-    {
-      path: '/Time',
-      name: 'Time',
-      component: Time
-    },
+    // {
+    //   path: '/Time',
+    //   name: 'Time',
+    //   component: Time
+    // },
   ]
 })

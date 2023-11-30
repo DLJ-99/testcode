@@ -65,7 +65,13 @@ export default {
         model: { jsonPath: `../static/live2dw/live2d-widget-model-${this.modelId0}/assets/${this.modelId1}.model.json` },
         display: { position: 'left', width: 350, height: 800 }, // 调整大小,和位置
         mobile: { show: true }, // 要不要盯着你的鼠标看
-        log: false
+        log: false,
+        tips: {
+          mouseover:[{
+            selector:"#live2d-widget",
+            texts:['哈哈哈哈']
+          }]
+        }
       })
     },
     getModelId () {
