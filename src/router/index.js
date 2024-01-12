@@ -11,6 +11,7 @@ import screen from '@/components/screen'
 import LegendSelf from '@/components/LegendSelf'
 import Swiper from '@/components/Swiper'
 import Time from '@/components/Time'
+import export2Excel from '@/components/export2Excel'
 
 import JsonViewer from '@/components/JsonViewer'
 import '../style/common.css'
@@ -71,10 +72,10 @@ export default new Router({
       name: 'Swiper',
       component: Swiper
     },
-    // {
-    //   path: '/Time',
-    //   name: 'Time',
-    //   component: Time
-    // },
+    {
+      path: '/export2Excel',
+      name: 'export2Excel',
+      component: export2Excel
+    },
   ]
 })
