@@ -287,6 +287,13 @@ export function export_json_to_excel({
       const _v = v + j
       if (ws[_v]) {
         ws[_v].s = {}
+      }else{//初始化表格数据为undefined的表格格子
+        ws[_v]={
+          v:'',
+          t:'s',
+          s:{}
+        }
+      }
         // 标题部分A1-Z1
         // ws['A' + j].s = {
         //   border: borderAll,
@@ -342,7 +349,6 @@ export function export_json_to_excel({
             }
           }
         }
-      }
     }
   })
   console.log("ws",ws)
