@@ -477,47 +477,47 @@ export default {
       '代理人名称','营销单位联系人','营销单位联系电话','营销单位邮箱','代理人联系人',
       '代理人联系电话','代理人邮箱'
       ]
-      const FilnalData = onSortList(this.tableData,sortOrder)
+      const FinalData = onSortList(this.tableData,sortOrder)
       const multiHeader = new Array(header.length-1).fill('')
       const multiHeader2 = new Array(header.length-3).fill('')
       multiHeader.unshift('错误数据明细表')
       multiHeader2.unshift('退款总额（元）：5565645')
       multiHeader2.unshift('财务编号：063156312')
-      // import('@/assets/js/Export2Excel').then((excel)=>
-        export_json_to_excel({
-          multiHeader:[multiHeader,multiHeader2],
-          header, //表头 必填
-          data: FilnalData, //具体数据 必填
-          filename: '错误数据明细表',
-          // 要合并的单元格
-          // merges: ['A1:A2', 'B1:F1', 'G1:G2'],
-          merges: ['A1:'+getExcelCell(sortOrder.length)+'1'],
-          autoWidth: true,
-          bookType: 'xlsx'
-        })
-      // )
-
-      // 多表结构
-      // const wb = XLSX.utils.book_new()
-      // const FilnalDataArr = new Array(4).fill(FilnalData)
-      // const multiHeaderArr = new Array(3).fill([multiHeader])
-      // multiHeaderArr.unshift([multiHeader,multiHeader2])
-      // for(let i=0;i<FilnalDataArr.length;i++){
-      //   const ws = export_json_to_excel({
-      //     multiHeader:multiHeaderArr[i],
+      // // import('@/assets/js/Export2Excel').then((excel)=>
+      //   export_json_to_excel({
+      //     multiHeader:[multiHeader,multiHeader2],
       //     header, //表头 必填
-      //     data: FilnalDataArr[i], //具体数据 必填
+      //     data: FinalData, //具体数据 必填
       //     filename: '错误数据明细表',
       //     // 要合并的单元格
       //     // merges: ['A1:A2', 'B1:F1', 'G1:G2'],
       //     merges: ['A1:'+getExcelCell(sortOrder.length)+'1'],
       //     autoWidth: true,
-      //     bookType: 'xlsx',
-      //     isSheet:true
+      //     bookType: 'xlsx'
       //   })
-      //   XLSX.utils.book_append_sheet(wb, ws, '表格'+(i+1))
-      // }
-      // saveFunc(wb,'xlsx','错误数据明细表')
+      // // )
+
+      // 多表结构
+      const wb = XLSX.utils.book_new()
+      const FilnalDataArr = new Array(4).fill(FinalData)
+      const multiHeaderArr = new Array(3).fill([multiHeader])
+      multiHeaderArr.unshift([multiHeader,multiHeader2])
+      for(let i=0;i<FilnalDataArr.length;i++){
+        const ws = export_json_to_excel({
+          multiHeader:multiHeaderArr[i],
+          header, //表头 必填
+          data: FilnalDataArr[i], //具体数据 必填
+          filename: '错误数据明细表',
+          // 要合并的单元格
+          // merges: ['A1:A2', 'B1:F1', 'G1:G2'],
+          merges: ['A1:'+getExcelCell(sortOrder.length)+'1'],
+          autoWidth: true,
+          bookType: 'xlsx',
+          isSheet:true
+        })
+        XLSX.utils.book_append_sheet(wb, ws, '表格'+(i+1))
+      }
+      saveFunc(wb,'xlsx','错误数据明细表')
     },
   }
 }

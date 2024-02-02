@@ -121,7 +121,7 @@ export function export_table_to_excel(id) {
 
   /* original data */
   var data = oo[0];
-  var ws_name = "SheetJS";
+  var ws_name = "Sheet1";
 
   var wb = new Workbook(),
     ws = sheet_from_array_of_arrays(data);
@@ -153,7 +153,8 @@ export function export_json_to_excel({
   merges = [],
   autoWidth = true,
   bookType = 'xlsx',
-  isSheet = false
+  isSheet = false,
+  footerNoComplete = false
 } = {}) {
   /* original data */
   filename = filename || 'excel-list'
@@ -164,7 +165,7 @@ export function export_json_to_excel({
     data.unshift(multiHeader[i])
   }
 
-  var ws_name = "SheetJS";
+  var ws_name = "Sheet1";
   var wb = new Workbook(),
     ws = sheet_from_array_of_arrays(data);
 
@@ -184,7 +185,7 @@ export function export_json_to_excel({
           'wch': 10
         };
       }else{
-      /*再判断是否为中文*/
+        /*再判断是否为中文*/
         if (val.toString().charCodeAt(0) > 255) {//针对以中文字符开头的数据再处理
           let wch = 0
           const valStr = val.toString()
@@ -195,18 +196,18 @@ export function export_json_to_excel({
               wch++
             }
           }
-        return {
+          return {
             'wch': wch
-        };
-      } else {
-        return {
-          'wch': val.toString().length
-        };
-      }
+          };
+        } else {
+          return {
+            'wch': val.toString().length
+          };
+        }
       }
     }))
-    console.log("data",data)
-    console.log("colWidth",colWidth)
+    //console.log("data",data)
+    // //console.log("colWidth",colWidth)
     /*以第一行为初始值*/
     let result = colWidth[0];
     for (let i = 1; i < colWidth.length; i++) {
@@ -217,7 +218,7 @@ export function export_json_to_excel({
       }
     }
     ws['!cols'] = result;
-    console.log("result",result)
+    // //console.log("result",result)
   }
 
   /* add worksheet to workbook */
@@ -261,7 +262,7 @@ export function export_json_to_excel({
       }
     }
   }
-  // console.log("data",data)
+  // //console.log("data",data)
 
   // const arrabc = ['A',
   //   'B',
@@ -345,35 +346,48 @@ export function export_json_to_excel({
         const condition = j>0&&j<=len+1
         const len2 = len>1?multiHeader[len-1].filter(item=>item!='').length:0
         const header2 = []
+        const footer = []
+        const dataLen = data.length
+        const len3 = data[dataLen-1].filter(item=>item!='').length
         for(let i=0;i<len2;i++){
           header2.push(arrabc[i])
         }
-        // console.log("header2==>",header2)
+        for(let i=0;i<len3;i++){
+          footer.push(arrabc[i])
+        }
+        // //console.log("dataLen==>",dataLen)
+        // //console.log("footer==>",footer)
         if (condition) {
           ws[v + j].s = {
-            border: (len>0&&j==1)||(len2>0&&!header2.includes(v)&&j==2)?{}:borderAll,
-            font: {
-              name: 'Arial',
-              sz: 10,
-              color: {
-                rgb: '000000'
+              //1. 表头去边框；2.二级表头去边框
+              border: (len>0&&j==1)||(len2>0&&!header2.includes(v)&&j==2)?{}:borderAll,
+              font: {
+                name: 'Arial',
+                sz: 10,
+                color: {
+                  rgb: '000000'
+                },
+                bold: true
               },
-              bold: true
-            },
-            alignment: {
-              horizontal: 'center',
-              vertical: 'center'
-            },
-            fill: {
-              fgColor: {
-                rgb: (len2>0&&!header2.includes(v)&&j==2)?'FFFFFF':'C0C0C0'
+              alignment: {
+                horizontal: 'center',
+                vertical: 'center'
+              },
+              fill: {
+                fgColor: {
+                  rgb: (len2>0&&!header2.includes(v)&&j==2)?'FFFFFF':'C0C0C0'
+                }
               }
             }
+          }else if(j>len+1){
+            ws[v + j].s = Object.assign(ws[v + j].s,{
+              //1.表尾去边框
+              border: (footerNoComplete&&j==dataLen&&!footer.includes(v))?{}:borderAll,
+            })
           }
         }
-    }
   })
-  console.log("ws",ws)
+  //console.log("ws",ws)
   wb.Sheets[ws_name] = ws;
   // var wbout = XLSX.write(wb, {
   //   bookType: bookType,
