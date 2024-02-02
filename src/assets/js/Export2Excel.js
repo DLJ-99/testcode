@@ -152,7 +152,8 @@ export function export_json_to_excel({
   filename,
   merges = [],
   autoWidth = true,
-  bookType = 'xlsx'
+  bookType = 'xlsx',
+  isSheet = false
 } = {}) {
   /* original data */
   filename = filename || 'excel-list'
@@ -182,18 +183,30 @@ export function export_json_to_excel({
         return {
           'wch': 10
         };
-      }
+      }else{
       /*再判断是否为中文*/
-      else if (val.toString().charCodeAt(0) > 255) {
+        if (val.toString().charCodeAt(0) > 255) {//针对以中文字符开头的数据再处理
+          let wch = 0
+          const valStr = val.toString()
+          for(let i=0;i<valStr.length;i++){
+            if(valStr.charCodeAt(i) > 255){
+              wch+=2
+            }else{
+              wch++
+            }
+          }
         return {
-          'wch': val.toString().length * 2
+            'wch': wch
         };
       } else {
         return {
           'wch': val.toString().length
         };
       }
+      }
     }))
+    console.log("data",data)
+    console.log("colWidth",colWidth)
     /*以第一行为初始值*/
     let result = colWidth[0];
     for (let i = 1; i < colWidth.length; i++) {
@@ -204,6 +217,7 @@ export function export_json_to_excel({
       }
     }
     ws['!cols'] = result;
+    console.log("result",result)
   }
 
   /* add worksheet to workbook */
@@ -247,7 +261,7 @@ export function export_json_to_excel({
       }
     }
   }
-  console.log("data",data)
+  // console.log("data",data)
 
   // const arrabc = ['A',
   //   'B',
@@ -326,10 +340,18 @@ export function export_json_to_excel({
           }
         }
         // 头部
-        const condition = multiHeader.length>0?(j == 1||j == 2):j==1
+        // const condition = multiHeader.length>0?(j == 1||j == 2):j==1
+        const len = multiHeader.length
+        const condition = j>0&&j<=len+1
+        const len2 = len>1?multiHeader[len-1].filter(item=>item!='').length:0
+        const header2 = []
+        for(let i=0;i<len2;i++){
+          header2.push(arrabc[i])
+        }
+        // console.log("header2==>",header2)
         if (condition) {
           ws[v + j].s = {
-            border: multiHeader.length>0&&j==1?{}:borderAll,
+            border: (len>0&&j==1)||(len2>0&&!header2.includes(v)&&j==2)?{}:borderAll,
             font: {
               name: 'Arial',
               sz: 10,
@@ -344,7 +366,7 @@ export function export_json_to_excel({
             },
             fill: {
               fgColor: {
-                rgb: 'C0C0C0'
+                rgb: (len2>0&&!header2.includes(v)&&j==2)?'FFFFFF':'C0C0C0'
               }
             }
           }
@@ -353,6 +375,21 @@ export function export_json_to_excel({
   })
   console.log("ws",ws)
   wb.Sheets[ws_name] = ws;
+  // var wbout = XLSX.write(wb, {
+  //   bookType: bookType,
+  //   bookSST: false,
+  //   type: 'binary'
+  // });
+  // saveAs(new Blob([s2ab(wbout)], {
+  //   type: "application/octet-stream"
+  // }), `${filename}.${bookType}`);
+  if(isSheet){
+    return ws
+  }else{
+    saveFunc(wb,bookType,filename)
+  }
+}
+export function saveFunc(wb,bookType,filename) {
   var wbout = XLSX.write(wb, {
     bookType: bookType,
     bookSST: false,
