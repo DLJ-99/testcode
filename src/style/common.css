@@ -48,6 +48,6 @@ li {
 .no-border {border:0 !important;}
 
 /* scrollbar */
-::-webkit-scrollbar {width:0;height:0;}
+/* ::-webkit-scrollbar {width:0;height:0;}
 ::-webkit-scrollbar-track {background-color:transparent;}
-::-webkit-scrollbar-thumb {border-radius:5px;background-color:rgba(0, 0, 0, 0.3);}
+::-webkit-scrollbar-thumb {border-radius:5px;background-color:rgba(0, 0, 0, 0.3);} */

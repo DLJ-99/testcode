@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-    <img class="headImg" src="./assets/img/mingren.gif" @click="initPage">
+    <!-- <img class="headImg" src="./assets/img/mingren.gif" @click="initPage"> -->
     <div>
     <!-- <el-tag style="cursor:pointer" v-for="(item,index) in modelArr" :key="index" @click="changeModel(item)">{{item}}</el-tag> -->
-    <el-select placeholder="选择模型" v-model="modelStr" @change="changeModel()">
+    <!-- <el-select placeholder="选择模型" v-model="modelStr" @change="changeModel()">
       <el-option v-for="(item,index) in modelArr" :key="index"
       :label="item"
       :value="item">{{item}}
       </el-option>
-    </el-select>
+    </el-select> -->
     </div>
     <NavList/>
     <keep-alive>
@@ -18,6 +18,8 @@
 </template>
 <script src="/static/echarts/echarts-all.js"></script>
 <script>
+import {getScrollbarWidth} from '@/assets/js/utils'
+
 export default {
   name: 'App',
   data () {
@@ -30,6 +32,7 @@ export default {
     }
   },
   created () {
+    console.log('scrollYWidth',getScrollbarWidth())
     this.getModelId()
   },
   methods: {
@@ -102,4 +105,28 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+/* 滚动条优化 start */
+::-webkit-scrollbar{
+    width:8px;
+    height:8px;
+  }
+  ::-webkit-scrollbar-track{
+    background: #f6f6f6;
+    border-radius:2px;
+  }
+  ::-webkit-scrollbar-thumb{
+    background: #cdcdcd;
+    border-radius:2px;
+  }
+  ::-webkit-scrollbar-thumb:hover{
+    background: #747474;
+  }
+  ::-webkit-scrollbar-corner {
+    background: #f6f6f6;
+  }
+  .ant-table-hide-scrollbar{
+    box-sizing: border-box;
+    /* width: calc(100% + 9px); */
+  }
+  /* 滚动条优化 end */
 </style>

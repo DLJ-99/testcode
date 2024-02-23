@@ -25,6 +25,7 @@ export default {
     this.mySwiper = new Swiper ('.swiper', {
         speed: 1000,
         mousewheel: true,
+        autoplay:false,
         autoplay: { // 自动开始
           delay: 500, // 时间间隔
           stopOnLastSlide: false,
@@ -41,12 +42,13 @@ export default {
 <style lang='less' scoped>
 #swiper{
   margin:  0 auto;
-  width: 500px;
+  width: 100%;
 }
 .swiper {
-    width: 500px;
+    width: 50%;
     line-height: 30px;
     height: 30px;
+    margin:  0 auto;
 }
 .swiper-wrapper,
 .swiper-slide{

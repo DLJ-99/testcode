@@ -77,5 +77,10 @@ export default new Router({
       name: 'export2Excel',
       component: export2Excel
     },
+    {
+      path: '/Time',
+      name: 'Time',
+      component: Time
+    },
   ]
 })

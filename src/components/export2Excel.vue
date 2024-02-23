@@ -1,27 +1,139 @@
 <template>
 <div id=''>
-  <div><el-button type="primary" @click="onComplexExport">导出</el-button></div>
-  <div>
-    <el-table :data="tableData" id="tableData">
-      <el-table-column label="编号" prop="id"></el-table-column>
-      <el-table-column label="银行名称" prop="bankName"></el-table-column>
-      <el-table-column label="银行代码" prop="bankCode"></el-table-column>
-      <el-table-column label="银行卡标识" prop="cardName"></el-table-column>
-      <el-table-column label="银行卡标识长度" prop="cardLength"></el-table-column>
-      <el-table-column label="银行卡账号" prop="mainAccount"></el-table-column>
-      <el-table-column label="银行卡类型" prop="cardType"></el-table-column>
-    </el-table>
+  <div style="margin: 10px 0;"><a-button type="primary" @click="onComplexExport">导出</a-button></div>
+  <div style="margin: 0 20px;">
+    <a-table
+    bordered
+    :scroll="{y:200}"
+    size="middle"
+    :rowKey="(record, index) => index + 1"
+    :columns="columns"
+    :dataSource="tableData"
+    :pagination="ipagination"
+    >
+    </a-table>
   </div>
 </div>
 </template>
 
 <script>
-import {onSortList,getExcelCell} from '@/assets/js/utils'
+import {onSortList,getExcelCell,getScrollbarWidth} from '@/assets/js/utils'
 import {export_json_to_excel,saveFunc} from '@/assets/js/Export2Excel'
 import * as XLSX from 'xlsx'
 export default {
   data(){
     return {
+      ipagination:{
+        current: 1,
+        pageSize: 10,
+        pageSizeOptions: ['10', '20', '30'],
+        showTotal: (total, range) => {
+          return range[0] + "-" + range[1] + " 共" + total + "条"
+        },
+        showQuickJumper: false,
+        showSizeChanger: false,
+        total: 0
+      },
+      columns: [
+        {
+          title: '序号',
+          align: "center",
+          customRender: (text, record, index) => index + 1,
+          width: 50,
+        },
+        {
+          title: '旅客姓名',
+          align: "center",
+          dataIndex: 'passengerName',
+          width: 100
+        },
+        {
+          title: '原票号',
+          align: "center",
+          width: 120,
+          dataIndex: 'originalTicket'
+        },
+        {
+          title: '新票号',
+          align: "center",
+          width: 120,
+          dataIndex: 'newTicket',
+        },
+        {
+          title: '实际退款',
+          align: "center",
+          width: 100,
+          dataIndex: 'refundMoney'
+        },
+        {
+          title: '银行户名',
+          align: "center",
+          dataIndex: 'bankAccountName',
+          width: 100
+        },
+        {
+          title: '银行账号',
+          align: "center",
+          dataIndex: 'bankAccount',
+          width: 120
+        },
+        // {
+        //   title: '收款银行名称',
+        //   align: "center",
+        //   dataIndex: 'receBankName',
+        //   width: 100
+        // },
+        // {
+        //   title: '银行',
+        //   align: "center",
+        //   dataIndex: 'bankName',
+        //   width: 100
+        // },
+        // {
+        //   title: '省份',
+        //   align: "center",
+        //   dataIndex: 'province',
+        //   width: 50
+        // },
+        // {
+        //   title: '城市',
+        //   align: "center",
+        //   dataIndex: 'city',
+        //   width: 100
+        // },
+        {
+          title: '订单时间',
+          align: "center",
+          dataIndex: 'orderDate',
+          width: 100
+        },
+        {
+          title: '业务渠道',
+          align: "center",
+          dataIndex: 'channelType',
+          width: 100,
+          // scopedSlots: {customRender: 'channelType'},
+        },
+        {
+          title: '回盘日期',
+          align: "center",
+          dataIndex: 'backTime',
+          width: 100
+        },
+        {
+          title: '错误原因',
+          align: "center",
+          dataIndex: 'reason',
+          width: 100
+        },
+        {
+          title: '操作',
+          dataIndex: 'action',
+          scopedSlots: {customRender: 'action'},
+          align: "center",
+          width: 50
+        }
+      ],
       tableData: [
     {
         "passengerName": "刘欣",
@@ -460,6 +572,9 @@ export default {
   },
   mounted(){
     // console.log("getExcelCell(27)",getExcelCell(27))
+    const pad = window.getComputedStyle(document.getElementsByClassName('ant-table-hide-scrollbar')[0], null).getPropertyValue('padding-right')
+    console.log("ant-table-hide-scrollbar",pad)
+    document.getElementsByClassName('ant-table-hide-scrollbar')[0].style.paddingRight -= 17
   },
   methods:{
     onComplexExport() {
@@ -522,6 +637,3 @@ export default {
   }
 }
 </script>
-<style lang='less' scoped>
-
-</style>

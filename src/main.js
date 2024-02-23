@@ -6,6 +6,8 @@ import router from './router'
 import components from './components/index'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import Antd from 'ant-design-vue';
+import 'ant-design-vue/dist/antd.css';
 import echarts from 'echarts'
 import JsonViewer from 'vue-json-viewer'
 // 将自动注册所有组件为全局组件
@@ -23,6 +25,7 @@ Vue.use(ElementUI)
 Vue.use(JsonViewer)
 Vue.use(Vue2OrgTree)
 Vue.use(dataV)
+Vue.use(Antd);
 Vue.prototype.$jsEncrypt = JSEncrypt
 /* eslint-disable no-new */
 new Vue({
