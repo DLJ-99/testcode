@@ -8,7 +8,8 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
-import echarts from 'echarts'
+import * as echarts from 'echarts';
+import 'echarts-gl';
 import JsonViewer from 'vue-json-viewer'
 // 将自动注册所有组件为全局组件
 import dataV from '@jiaminghi/data-view'
